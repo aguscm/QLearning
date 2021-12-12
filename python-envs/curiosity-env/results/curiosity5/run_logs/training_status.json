@@ -1,0 +1,29 @@
+{
+    "CuriousAgent": {
+        "checkpoints": [
+            {
+                "steps": 125312,
+                "file_path": "results\\curiosity5\\CuriousAgent\\CuriousAgent-125312.onnx",
+                "reward": -1.529033362865448,
+                "creation_time": 1639238456.9912226,
+                "auxillary_file_paths": [
+                    "results\\curiosity5\\CuriousAgent\\CuriousAgent-125312.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 125312,
+            "file_path": "results\\curiosity5\\CuriousAgent.onnx",
+            "reward": -1.529033362865448,
+            "creation_time": 1639238456.9912226,
+            "auxillary_file_paths": [
+                "results\\curiosity5\\CuriousAgent\\CuriousAgent-125312.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.27.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
