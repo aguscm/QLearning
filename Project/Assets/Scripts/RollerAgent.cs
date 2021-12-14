@@ -13,7 +13,7 @@ public class RollerAgent : Agent
     }
 
     public Transform Target;
-    public Transform ForbiddenTarget;
+    public Transform Trap;
     public override void OnEpisodeBegin()
     {
         // If the Agent fell, zero its momentum
@@ -24,22 +24,33 @@ public class RollerAgent : Agent
             this.transform.localPosition = new Vector3(0, 0.5f, 0);
         }
 
-        // Move the target to a new spot
-        Target.localPosition = new Vector3(Random.value * 8 - 4,
+        // Move the target to a new spot far (>2f) from the ball
+        bool TargetIsPositioned = false;
+        while (!TargetIsPositioned)
+        {
+
+            Vector3 TargetPosition = new Vector3(Random.value * 8 - 4,
                                            0.5f,
                                            Random.value * 8 - 4);
-
-        // Move the forbidden target to a new spot far (more than 3f) from the target
-        if (ForbiddenTarget)
-        {
-            bool forbiddenTargetIsPositioned = false;
-            while (!forbiddenTargetIsPositioned)
+            if ((TargetPosition - this.gameObject.transform.localPosition).magnitude > 2f)
             {
-                Vector3 forbiddenTargetPosition = new Vector3(Random.value * 8 - 4, 0.5f, Random.value * 8 - 4);
-                if ((forbiddenTargetPosition - Target.localPosition).magnitude > 3f)
+                Target.localPosition = TargetPosition;
+                TargetIsPositioned = true;
+            }
+        }
+        
+
+        // Move the forbidden target to a new spot far (>3f) from the target and far (2f) from the ball
+        if (Trap)
+        {
+            bool TrapIsPositioned = false;
+            while (!TrapIsPositioned)
+            {
+                Vector3 TrapPosition = new Vector3(Random.value * 8 - 4, 0.5f, Random.value * 8 - 4);
+                if ((TrapPosition - Target.localPosition).magnitude > 3f && (TrapPosition - this.gameObject.transform.localPosition).magnitude > 2f)
                 {
-                    ForbiddenTarget.localPosition = forbiddenTargetPosition;
-                    forbiddenTargetIsPositioned = true;
+                    Trap.localPosition = TrapPosition;
+                    TrapIsPositioned = true;
                 }
             }
         }
@@ -50,7 +61,7 @@ public class RollerAgent : Agent
     {
         // Target and Agent positions
         sensor.AddObservation(Target.localPosition);
-        sensor.AddObservation(ForbiddenTarget.localPosition);
+        sensor.AddObservation(Trap.localPosition);
         sensor.AddObservation(this.transform.localPosition);
 
         // Agent velocity
@@ -67,26 +78,11 @@ public class RollerAgent : Agent
         controlSignal.z = actionBuffers.ContinuousActions[1];
         rBody.AddForce(controlSignal * forceMultiplier);
 
-        // Rewards
-        float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
-        float distanceToForbiddenTarget = Vector3.Distance(this.transform.localPosition, ForbiddenTarget.localPosition);
 
-        // Reached target
-        if (distanceToTarget < 1.42f)
-        {
-            SetReward(1.0f);
-            EndEpisode();
-        }
-
-        //Reached the forbidden target
-        else if (ForbiddenTarget && distanceToForbiddenTarget < 1.42f)
+        // Fell off platform
+        if (this.transform.localPosition.y < 0)
         {
             SetReward(-0.5f);
-            EndEpisode();
-        }
-        // Fell off platform
-        else if (this.transform.localPosition.y < 0)
-        {
             EndEpisode();
         }
     }
@@ -96,6 +92,21 @@ public class RollerAgent : Agent
         var continuousActionsOut = actionsOut.ContinuousActions;
         continuousActionsOut[0] = Input.GetAxis("Horizontal");
         continuousActionsOut[1] = Input.GetAxis("Vertical");
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Trap"))
+        {
+            SetReward(-0.5f);
+            EndEpisode();
+        }
+        else if (collision.collider.CompareTag("Target"))
+        {
+            SetReward(1f);
+            EndEpisode();
+        }
+
     }
 
 }
