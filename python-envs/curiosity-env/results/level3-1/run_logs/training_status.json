@@ -1,0 +1,65 @@
+{
+    "CuriousAgent": {
+        "checkpoints": [
+            {
+                "steps": 3999898,
+                "file_path": "results\\level3-1\\CuriousAgent\\CuriousAgent-3999898.onnx",
+                "reward": 0.9710714135851178,
+                "creation_time": 1639492001.0801249,
+                "auxillary_file_paths": [
+                    "results\\level3-1\\CuriousAgent\\CuriousAgent-3999898.pt"
+                ]
+            },
+            {
+                "steps": 4499991,
+                "file_path": "results\\level3-1\\CuriousAgent\\CuriousAgent-4499991.onnx",
+                "reward": 1.7006181620738723,
+                "creation_time": 1639492776.9344227,
+                "auxillary_file_paths": [
+                    "results\\level3-1\\CuriousAgent\\CuriousAgent-4499991.pt"
+                ]
+            },
+            {
+                "steps": 4999976,
+                "file_path": "results\\level3-1\\CuriousAgent\\CuriousAgent-4999976.onnx",
+                "reward": 1.9380833450704813,
+                "creation_time": 1639493554.2722878,
+                "auxillary_file_paths": [
+                    "results\\level3-1\\CuriousAgent\\CuriousAgent-4999976.pt"
+                ]
+            },
+            {
+                "steps": 5499887,
+                "file_path": "results\\level3-1\\CuriousAgent\\CuriousAgent-5499887.onnx",
+                "reward": 1.9574999943375588,
+                "creation_time": 1639494334.136263,
+                "auxillary_file_paths": [
+                    "results\\level3-1\\CuriousAgent\\CuriousAgent-5499887.pt"
+                ]
+            },
+            {
+                "steps": 5692193,
+                "file_path": "results\\level3-1\\CuriousAgent\\CuriousAgent-5692193.onnx",
+                "reward": null,
+                "creation_time": 1639494636.8875601,
+                "auxillary_file_paths": [
+                    "results\\level3-1\\CuriousAgent\\CuriousAgent-5692193.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 5692193,
+            "file_path": "results\\level3-1\\CuriousAgent.onnx",
+            "reward": null,
+            "creation_time": 1639494636.8875601,
+            "auxillary_file_paths": [
+                "results\\level3-1\\CuriousAgent\\CuriousAgent-5692193.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.27.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
