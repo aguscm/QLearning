@@ -21,9 +21,6 @@ public class CuriousAgent2 : Agent
         rBody = GetComponent<Rigidbody>();
     }
 
-
-
-
     public override void OnEpisodeBegin()
     {
         //Sets the position, rotation and velocity of the agent
@@ -32,15 +29,7 @@ public class CuriousAgent2 : Agent
         this.transform.rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0, 360)));
         this.transform.localPosition = StartPositions[Random.Range(0, StartPositions.Length)].localPosition;
 
-
-
         //Creates randomly the traps and the target with the placeholders
-        //int[] randomIndexes = new int[TrapOrTargetPlaceholders.Length];
-        //for (var i = 0; i < randomIndexes.Length; i++)
-        //{
-        //    randomIndexes[i] = i;
-        //}
-
         if (Traps.Count > 0)
         {
             foreach (GameObject trap in Traps)
@@ -69,20 +58,15 @@ public class CuriousAgent2 : Agent
         }
 
         //The first element will be the target
-        //Instantiate(PrefabTarget, TrapOrTargetPlaceholders[0].transform, false);
         Targets.Add(Instantiate(PrefabTarget, TrapOrTargetPlaceholders[0].transform.position, Quaternion.identity, TrapOrTargetPlaceholders[0].transform));
 
         //Instantiate the rest of the elements as traps
         for (var i = 1; i < TrapOrTargetPlaceholders.Length; i++)
         {
-            //Instantiate(PrefabTrap, TrapOrTargetPlaceholders[i].transform, false);
             Traps.Add(Instantiate(PrefabTrap, TrapOrTargetPlaceholders[i].transform.position, Quaternion.identity, TrapOrTargetPlaceholders[i].transform));
         }
 
     }
-
-
-
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -114,14 +98,12 @@ public class CuriousAgent2 : Agent
         transform.Rotate(rotateDir, Time.deltaTime * 200f);
         rBody.AddForce(dirToGo * MovementForce, ForceMode.VelocityChange);
     }
-
     public override void OnActionReceived(ActionBuffers actionBuffers)
 
     {
         AddReward(-1f / MaxStep);
         MoveAgent(actionBuffers.DiscreteActions);
     }
-
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActionsOut = actionsOut.DiscreteActions;
